@@ -5,6 +5,9 @@ import React, { useState } from 'react'
 const MorseCode = () => {
     const [audioCtx, setAudioCtx] = useState<AudioContext | undefined>(undefined)
     const [gainNode, setGainNode] = useState<GainNode | undefined>(undefined)
+
+    // used to create the AudioContext and the GainNode
+    // which is used to make the tone play when the button is pressed
     const initAudioContext = React.useCallback(() => {
         if (audioCtx !== undefined) return
         const audio = new AudioContext()
@@ -13,17 +16,19 @@ const MorseCode = () => {
         oscillator.frequency.value = 800
         oscillator.start()
         const gain = audio.createGain()
-        gain.gain.value = 0.5
+        gain.gain.value = 0.2
         oscillator.connect(gain)
         setGainNode(gain)
         setAudioCtx(audio)
     }, [audioCtx])
 
+    // start the tone
     const startAudio = React.useCallback(() => {
         if (audioCtx === undefined || gainNode === undefined) return
         gainNode.connect(audioCtx.destination)
     }, [audioCtx, gainNode])
 
+    // stop the tone
     const stopAudio = React.useCallback(() => {
         if (audioCtx === undefined || gainNode === undefined) return
         gainNode.disconnect(audioCtx.destination)
