@@ -46,8 +46,7 @@ const MorseCode = () => {
 
     return (
         <div>
-            <div onClick={() => startAudio()}>Start Audio</div>
-            <div onClick={() => stopAudio()}>Stop Audio</div>
+            Morse code app goes here.
         </div>
     )
 }
